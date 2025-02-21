@@ -1,0 +1,22 @@
+services:
+  mysqldb:
+    image: "imagename"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    container_name: "container_name"
+    #did it run sucessfully or not
+    healthcheck:
+      test: ["executable", "arg"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+  
+  #another container
+  myapps: 
+    build: path of dockerfile
+    container_name: container
+    #when mysql is done then this apps should be run
+    depends_on:
+      mysqldb:
+        condition: service_healthy
